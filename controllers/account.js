@@ -47,13 +47,13 @@ exports.getFollows = (req, res, next) => {
         
         // Add account if doesn't exist
         const acct = new Account({
-          id: results2.userData.id
-          username: results2.userData.username
-          full_name: results2.userData.full_name
-          profile_picture: results2.userData.profile_picture
-          bio: results2.userData.bio
-          posts: results2.userData.counts.media
-          follows: results2.userData.counts.follows
+          id: results2.userData.id,
+          username: results2.userData.username,
+          full_name: results2.userData.full_name,
+          profile_picture: results2.userData.profile_picture,
+          bio: results2.userData.bio,
+          posts: results2.userData.counts.media,
+          follows: results2.userData.counts.follows,
           followed_by: results2.userData.counts.followed_by
         });
 
@@ -69,41 +69,13 @@ exports.getFollows = (req, res, next) => {
       }); // end userdata return
       
       // End
-    
+      
     }; // end for
 
     console.log("Outside of for");
     res.render('look/follows', {
       title: 'Follows',
       allFollows: results.allFollows
-    });
-  });
-};
-
-/**
- * POST /account
- * Create a new local account.
- */
-exports.createAccount = (req, res, next) => {
-  const acct = new Account({
-    id: req.body.id,
-    password: req.body.password
-
-  });
-
-  Account.findOne({ email: req.body.email }, (err, existingUser) => {
-    if (existingUser) {
-      req.flash('errors', { msg: 'Account with that email address already exists.' });
-      return res.redirect('/signup');
-    }
-    user.save((err) => {
-      if (err) { return next(err); }
-      req.logIn(user, (err) => {
-        if (err) {
-          return next(err);
-        }
-        res.redirect('/');
-      });
     });
   });
 };
