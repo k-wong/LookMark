@@ -544,11 +544,6 @@ exports.getInstagram = (req, res, next) => {
         done(err, user);
       });
     },
-    popularImages: (done) => {
-      ig.media_popular((err, medias) => {
-        done(err, medias);
-      });
-    },
     myRecentMedia: (done) => {
       ig.user_self_media_recent((err, medias) => {
         done(err, medias);
@@ -560,7 +555,6 @@ exports.getInstagram = (req, res, next) => {
       title: 'Instagram API',
       usernames: results.searchByUsername,
       userById: results.searchByUserId,
-      popularImages: results.popularImages,
       myRecentMedia: results.myRecentMedia
     });
   });

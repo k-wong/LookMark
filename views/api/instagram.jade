@@ -47,17 +47,6 @@ block content
       h4= userById.full_name
       p= userById.bio
 
-  hr
-  p.lead
-    strong Popular Images
-    |  on Instagram
-  .row
-    for image in popularImages
-      .col-xs-3
-        a.thumbnail(href='#{image.link}')
-          img(src='#{image.images.standard_resolution.url}', height='320px')
-
-
 
   hr
   p.lead
