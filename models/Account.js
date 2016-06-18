@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const accountSchema = new mongoose.Schema({
   instagram_id: String, //id
-  full_Name: String,
+  full_name: String,
   username: String,
   profile_picture: String,
   bio: String,

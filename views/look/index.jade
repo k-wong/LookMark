@@ -1,4 +1,8 @@
-extends layout
+extends ../layout
 
 block content
-	h3 Look > List of all marks
+  h3 List of all Accounts
+  ul
+    for acct in accounts
+      li
+        div #{account.id} #{account.username} #{account.full_name} #{account.bio}

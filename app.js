@@ -125,7 +125,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/look', passportConfig.isAuthenticated, passportConfig.isAuthorized, markController.getMarks);
 
 app.get('/update', accountController.getFollows);
-
+app.get('/accounts', accountController.allAccounts);
 /**
  * API examples routes.
  */
