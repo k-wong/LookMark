@@ -61,7 +61,7 @@ exports.getFollows = (req, res, next) => {
           if (existingUser) {
 
           } else {
-            user.save((err) => {
+            acct.save((err) => {
               if (err) { return next(err); }
             });
           } // end if

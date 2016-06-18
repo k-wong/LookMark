@@ -9,3 +9,13 @@ exports.index = (req, res) => {
     title: 'Home'
   });
 };
+
+/**
+ * GET /
+ * Home page.
+ */
+exports.map = (req, res) => {
+  res.render('map', {
+    title: 'Map'
+  });
+};
