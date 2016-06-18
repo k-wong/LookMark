@@ -3,6 +3,9 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const passport = require('passport');
 const User = require('../models/User');
+const Account = require('../models/Account');
+const Mark = require('../models/Mark');
+
 
 /**
  * GET /login

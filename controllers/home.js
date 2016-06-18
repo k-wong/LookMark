@@ -1,3 +1,6 @@
+const ig = require('instagram-node').instagram();
+
+
 /**
  * GET /
  * Home page.
