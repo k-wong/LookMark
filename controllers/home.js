@@ -1,4 +1,3 @@
-const ig = require('instagram-node').instagram();
 
 
 /**

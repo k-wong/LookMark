@@ -13,6 +13,13 @@ const OAuthStrategy = require('passport-oauth').OAuthStrategy;
 const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
 const User = require('../models/User');
+const Account = require('../models/Account');
+const Mark = require('../models/Mark');
+const Media = require('../models/Media');
+
+const async = require('async');
+const ig = require('instagram-node').instagram();
+
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -330,12 +337,14 @@ passport.use(new LinkedInStrategy({
 
 /**
  * Sign in with Instagram.
+ * Then calls setup process to pull all follows, marks, and media
  */
 passport.use(new InstagramStrategy({
   clientID: process.env.INSTAGRAM_ID,
   clientSecret: process.env.INSTAGRAM_SECRET,
   callbackURL: '/auth/instagram/callback',
-  passReqToCallback: true
+  passReqToCallback: true,
+  scope: ['follower_list', 'basic', 'public_content']
 }, (req, accessToken, refreshToken, profile, done) => {
   if (req.user) {
     User.findOne({ instagram: profile.id }, (err, existingUser) => {
@@ -376,6 +385,9 @@ passport.use(new InstagramStrategy({
       });
     });
   }
+
+
+
 }));
 
 /**

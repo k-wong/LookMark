@@ -1,0 +1,8 @@
+extends ../layout
+
+block content
+  h3 List of all follows
+  ul
+    for follow in allFollows
+      li
+        div #{follow.username} #{follow.id} #{follow.full_name} #{follow.profile_picture}
