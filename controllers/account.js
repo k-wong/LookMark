@@ -84,7 +84,8 @@ exports.getFollows = (req, res, next) => {
                 latitude: results3.recentMedia[i].location.latitude,
                 longitude: results3.recentMedia[i].location.longitude,
                 //accts_been: [],
-                medias: [] //{results3.recentMedia[i].id})
+                medias: [], //{results3.recentMedia[i].id})
+                medias2:[]
               });
               //console.log("    " + i + " Mark -- " + temp_marks.toString());
               console.log("      " + i + " Media -- " + results3.recentMedia[i].caption.text);  
@@ -100,9 +101,23 @@ exports.getFollows = (req, res, next) => {
                 posted_by_name: results3.recentMedia[i].user.full_name
               });
 
+              const test = {
+                instagram_id: results3.recentMedia[i].id, //id
+                likes: results3.recentMedia[i].likes.count,
+                comments: results3.recentMedia[i].comments.count,
+                ig_link: results3.recentMedia[i].link,
+                caption: results3.recentMedia[i].caption.text,
+                post_date: results3.recentMedia[i].created_time,
+                image_url: results3.recentMedia[i].images.standard_resolution.url,
+                posted_by_instagram_id: results3.recentMedia[i].user.id,
+                posted_by_name: results3.recentMedia[i].user.full_name
+              };
+
               Mark.findOne({ instagram_id: mark.instagram_id }, (err, existingMark) => {
                 if (!existingMark) { // add new mark
                   mark.medias.push(media);
+                  mark.medias2.push(test);
+
                   //mark.medias.push(media.instagram_id);
                   mark.save((err) => {
                     if (err) { return next(err); }
@@ -120,6 +135,7 @@ exports.getFollows = (req, res, next) => {
                   if (!flag) { //if not previously existing media then add
                     //existingMark.medias.push(media.instagram_id);
                     existingMark.medias.push(media);
+                    existingMark.medias2.push(test);
                   };
                   existingMark.save((err) => {
                     if (err) { return next(err); }

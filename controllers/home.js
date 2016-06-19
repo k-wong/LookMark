@@ -23,13 +23,39 @@ exports.map = (req, res) => {
 */
 
 exports.map = (req, res) => {
-  Mark.find({})
-  .populate('Account')
-  .where('Account.instagram_id').in(req.user.follows)
-  .exec(function(err,docs) { 
-    res.render('look/marks', { marks: docs });
-  });
-};
+
+  Account.find({
+  	instagram_id: { $in: req.user.follows }
+  })
+  .populate('Mark')
+  //.populate('Media')
+  //.where('Account.instagram_id').in(req.user.follows)
+  .exec(function(err,docs) {
+
+  var i, j;
+  var mark_list = [];
+  for (i = 0; i < docs.length; ++i) {
+  	for (j = 0; j < docs[i].marks.length; ++j) {
+        mark_list.push(docs[i].marks[j]);  //Mark.findOne({instagram_id: docs[i].marks[j]}));
+  	};
+  }; // end for
+
+  // Get object-level Marks
+  Mark.find({
+     _id: { $in: mark_list }  //fucking hacky as shit b/c uses objectId instead of instagram_id...but fuck it
+  })
+  .populate('Media')
+  .exec(function(err,docs2) {
+    console.log(docs2);
+    console.log(docs2[25].medias2)
+	res.render('map', {marks: docs2});
+  }); // end Mark find
+
+  }); // end Account find
+
+
+
+}; // end function
 
 /*
   var acct_callback = function(obj) {

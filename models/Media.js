@@ -9,7 +9,8 @@ const mediaSchema = new mongoose.Schema({
   post_date: Date,
   image_url: String,
   posted_by_instagram_id: String,
-  posted_by_name: String
+  posted_by_name: String,
+  mark_instagram_id: String
 //  _mark: {type: mongoose.Schema.Types.ObjectId, ref: 'Mark'}
 }, { timestamps: true });
 
