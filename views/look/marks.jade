@@ -1,0 +1,8 @@
+extends ../layout
+
+block content
+  h3 List of all Marks
+  ul
+    for mark in marks
+      li
+        div #{mark.instagram_id} #{mark.name} #{mark.latitude} #{mark.longitude}

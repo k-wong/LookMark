@@ -32,7 +32,9 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const markController = require('./controllers/mark');
+const mediaController = require('./controllers/media');
 const accountController = require('./controllers/account');
+
 
 /**
  * API keys and Passport configuration.
@@ -124,10 +126,12 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
-app.get('/look', passportConfig.isAuthenticated, passportConfig.isAuthorized, markController.getMarks);
 
 app.get('/update', accountController.getFollows);
 app.get('/accounts', accountController.allAccounts);
+app.get('/testMarks', markController.allMarks);
+app.get('/testMedias', mediaController.allMedias);
+
 /**
  * API examples routes.
  */

@@ -26,9 +26,9 @@ const userSchema = new mongoose.Schema({
     picture: { type: String, default: '' }
   },
 
-  follows: [{type: mongoose.Schema.Types.ObjectId, ref: 'Account'}],
+  //follows: [{type: mongoose.Schema.Types.ObjectId, ref: 'Account'}],
+  follows: Array, //[ {instagram_id : String} ],
   lists: [{type: mongoose.Schema.Types.ObjectId, ref: 'List'}]
-  //lists: [{type: Schema.Types.ObjectId, ref: 'List'}]
 
 }, { timestamps: true });
 
