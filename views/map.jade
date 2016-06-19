@@ -1,43 +1,76 @@
 extends layout
 
 block content
-	div.lookMark
-		h3 Woorijip
-		img(src='https://pennypalate.files.wordpress.com/2009/02/woorijip.jpg')
-		div.row
-			div.col-xs-6 
-				p.pull-left 🔥🔥🔥🔥
-			div.col-xs-6
-				p.pull-right 10 influencers have been here
+	div#map		
+		script(type='text/javascript').
+			
+			// setting up (dummy) Marks
+			var dummyInstagramIDs = ["1","2","3"];
+			var dummyNames = ["ABC Cafe", "Nice Bar", "123 Restaurant"];
+			var dummyLats = [40.714, 40.714503, 40.715503];
+			var dummyLngs = [-73.958, -73.96, -73.955];
+			var dummyMedias = [];
+			
+			// mapping everything
+			function initMap() {
+				
+				// If my HTML5 geolocation is available
+				if (navigator.geolocation) {
+					
+					//create a Google Map in the DOM
+					var mapDiv = document.getElementById('map');
+					var map = new google.maps.Map(mapDiv, {
+						center: {lat: 40.734003, lng: -73.958143}, zoom: 8
+					});
 
-	div.lookMark 
-		h3 Cafe Orlin
-		img(src='https://wanderonwards.files.wordpress.com/2013/08/mogadorbrunch.jpg')
-		div.row
-			div.col-xs-6
-				p.pull-left 🔥🔥🔥
-			div.col-xs-6
-				p.pull-right 15 influencers have been here
+					//get my location...
+					navigator.geolocation.getCurrentPosition(function(position) {	
+						var pos = {
+							lat: position.coords.latitude,
+							lng: position.coords.longitude
+						};
+						
+						//...then create then place blueDot						
+						var blueDot = new google.maps.Marker({
+							position: pos,
+							map: map,
+							icon: 'http://commondatastorage.googleapis.com/comslider/target/users/1453003173x540cf6062e446ce9dba19fa84bd98fac/imgnav/nav2.png?timstamp=1455481209'
+						});						
+						blueDot.setPosition(pos);
+						blueDot.map.setCenter(pos);
+						blueDot.map.setZoom(16); //dynamically getting the right zoom number?
+												
+					}, 						
+					function() {handleLocationError(true, blueDot, map.getCenter());  });
+									
+					//iterate through to create the right number of markers
+					//Then filling in the Marks with data and place them on the map
+					var markerArray = [];					
+					for (i = 0; i < dummyInstagramIDs.length; i++) {
+						
+						//console.log("in for loop with index = " + i);
+						//console.log("current lat = " + dummyLats[i]);
+						//console.log("current lng = " + dummyLngs[i]);
+						//console.log("current instaID = " + dummyInstagramIDs[i]);
+						//console.log("current name = " + dummyNames[i]);	
+	
+						markerArray[i] = new google.maps.Marker({
+							position: {lat: dummyLats[i], lng: dummyLngs[i]},
+							map: map,
+							title: dummyNames[i]
+							//icon: dummyMedias[i]  //I know a URL works here...
+						});
+						
+					}
+									
+				}
+				
+				// If browser doesn't support Geolocation
+				else {
+					handleLocationError(false, infoWindow, map.getCenter());
+				}
+										
+			}
+				
+		script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXJ9EDnxgSrHZa_YYwQcbg3VuWHq8nFNA&callback=initMap")
 
-	div.lookMark 
-		h3 Shake Shack
-		img(src='http://burgerdays.com/wp-content/uploads/2013/06/shackburg.jpg')
-		div.row
-			div.col-xs-6 
-				p.pull-left 🔥🔥🔥🔥
-			div.col-xs-6
-				p.pull-right 4 influencers have been here
-
-	div.lookMark 
-		h3 Bluestone Coffee - Midtown East 
-		img(src='https://thirstynyc.com/wp-content/uploads/2014/06/Bluestone-Lane.jpg')
-		div.row
-			div.col-xs-6 
-				p.pull-left 🔥🔥🔥
-			div.col-xs-6
-				p.pull-right 7 influencers have been here
-
-	ul
-		for mark in marks
-			li
-				div #{mark.name}

@@ -1,17 +1,16 @@
-.navbar.navbar-default.navbar-fixed-top
-  .container
-    .navbar-header
-      button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-      a.navbar-brand(href='/')
-        i.fa.fa-cube
-        | LookMark
-    .collapse.navbar-collapse
-      ul.nav.navbar-nav
-        li(class=(title == 'Home') ? 'active' : undefined)
-          a(href='www.google.com') Map View
-        li(class=(title == 'API Examples') ? 'active' : undefined)
-          a(href='/api') Card View
-        li(class=(title == 'Login') ? 'active' : undefined)
-          a(href='/login') Search
-        li(class=(title == 'Create Account') ? 'active' : undefined)
-          a(href='/signup') Settings
+.seanNav
+	.container
+		div.row
+			div.col-xs-7
+				a(href='/')
+					img(src='http://static1.squarespace.com/static/556ef893e4b0b54303d2960f/t/55fbd446e4b0bf9fac948d0e/1464942729333/?format=1500w' width='35%' height='35%')
+				div(class='btn-group' role='group' aria-label='...')
+					a(class='btn btn-default' type='button' href='/') 
+						img(src='http://downloadicons.net/sites/default/files/stack-icons-63178.png' height='20px' width='20px')
+					a(class='btn btn-default' type='button' href='/map')
+						img(src='http://cdn.mysitemyway.com/icons-watermarks/simple-black/foundation/foundation_marker/foundation_marker_simple-black_512x512.png' height='20px' width='20px')
+			div.col-xs-5.text-right
+				div.input-group
+					input(type='text' class='form-control' placeholder='I am looking for...')
+					span.input-group-btn
+						button(class='btn btn-default' type='button') Go!

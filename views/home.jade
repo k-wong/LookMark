@@ -1,47 +1,44 @@
 extends layout
 
 block content
-	div.topHeader
-		div.row
-			div.col-xs-4
-				h1 LookMark
-			div.col-xs-4
-				p icons go here
-			div.col-xs-4
-				p search bar goes here
 
-	div.lookMark
-		h3 Woorijip
-		img(src='https://pennypalate.files.wordpress.com/2009/02/woorijip.jpg')
-		div.row
-			div.col-xs-6 
-				p.pull-left 🔥🔥🔥🔥
-			div.col-xs-6
-				p.pull-right 10 influencers have been here
-
-	div.lookMark 
-		h3 Cafe Orlin
-		img(src='https://wanderonwards.files.wordpress.com/2013/08/mogadorbrunch.jpg')
-		div.row
-			div.col-xs-6
-				p.pull-left 🔥🔥🔥
-			div.col-xs-6
-				p.pull-right 15 influencers have been here
-
-	div.lookMark 
-		h3 Shake Shack
-		img(src='http://burgerdays.com/wp-content/uploads/2013/06/shackburg.jpg')
-		div.row
-			div.col-xs-6 
-				p.pull-left 🔥🔥🔥🔥
-			div.col-xs-6
-				p.pull-right 4 influencers have been here
-
-	div.lookMark 
-		h3 Bluestone Coffee - Midtown East 
-		img(src='https://thirstynyc.com/wp-content/uploads/2014/06/Bluestone-Lane.jpg')
-		div.row
-			div.col-xs-6 
-				p.pull-left 🔥🔥🔥
-			div.col-xs-6
-				p.pull-right 7 influencers have been here
+	div#background
+		div.lookMarkCard
+			h3.seanH3 Woorijip
+			span.imgFrame
+				img.imgResizer(src='https://pennypalate.files.wordpress.com/2009/02/woorijip.jpg')
+			div.row
+				div.col-xs-6 
+					p.lookMarkText.pull-left 🔥🔥🔥🔥
+				div.col-xs-6
+					p.lookMarkText.pull-right 10 influencers have been here
+	
+		div.lookMarkCard
+			h3.seanH3 Cafe Orlin
+			span.imgFrame
+				img.imgResizer(src='https://wanderonwards.files.wordpress.com/2013/08/mogadorbrunch.jpg')
+			div.row
+				div.col-xs-6
+					p.lookMarkText.pull-left 🔥🔥🔥
+				div.col-xs-6
+					p.lookMarkText.pull-right 15 influencers have been here
+	
+		div.lookMarkCard
+			h3.seanH3 Shake Shack
+			span.imgFrame
+				img.imgResizer(src='http://burgerdays.com/wp-content/uploads/2013/06/shackburg.jpg')
+			div.row
+				div.col-xs-6 
+					p.lookMarkText.pull-left 🔥🔥🔥🔥
+				div.col-xs-6
+					p.lookMarkText.pull-right 4 influencers have been here
+	
+		div.lookMarkCard
+			h3.seanH3 Bluestone Lane Coffee - Midtown East 
+			span.imgFrame
+				img.imgResizer(src='https://thirstynyc.com/wp-content/uploads/2014/06/Bluestone-Lane.jpg')
+			div.row
+				div.col-xs-6 
+					p.lookMarkText.pull-left 🔥🔥🔥
+				div.col-xs-6
+					p.lookMarkText.pull-right 7 influencers have been here
