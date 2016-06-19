@@ -1,16 +1,26 @@
 extends layout
 
 block content
-	div#map		
+	div#map
 		script(type='text/javascript').
 			
 			// setting up (dummy) Marks
-			var dummyInstagramIDs = ["1","2","3"];
-			var dummyNames = ["ABC Cafe", "Nice Bar", "123 Restaurant"];
-			var dummyLats = [40.714, 40.714503, 40.715503];
-			var dummyLngs = [-73.958, -73.96, -73.955];
+			var dummyInstagramIDs = [];
+
+			var dummyNames =  [];
+			var dummyLats = [];
+			var dummyLngs = [];
 			var dummyMedias = [];
-			
+
+		for mark in marks
+			script(type='text/javascript').
+				dummyInstagramIDs.push(#{mark.instagram_id});
+				dummyNames.push("#{mark.name}");
+				dummyLats.push(#{mark.latitude});
+				dummyLngs.push(#{mark.longitude});
+				dummyMedias.push("#{mark.medias2[0].image_url}");
+
+		script(type='text/javascript').
 			// mapping everything
 			function initMap() {
 				
@@ -71,6 +81,5 @@ block content
 				}
 										
 			}
-				
-		script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXJ9EDnxgSrHZa_YYwQcbg3VuWHq8nFNA&callback=initMap")
 
+		script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXJ9EDnxgSrHZa_YYwQcbg3VuWHq8nFNA&callback=initMap")

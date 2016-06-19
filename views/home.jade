@@ -1,44 +1,61 @@
 extends layout
 
 block content
-
 	div#background
-		div.lookMarkCard
-			h3.seanH3 Woorijip
-			span.imgFrame
-				img.imgResizer(src='https://pennypalate.files.wordpress.com/2009/02/woorijip.jpg')
-			div.row
-				div.col-xs-6 
-					p.lookMarkText.pull-left 🔥🔥🔥🔥
-				div.col-xs-6
-					p.lookMarkText.pull-right 10 influencers have been here
-	
-		div.lookMarkCard
-			h3.seanH3 Cafe Orlin
-			span.imgFrame
-				img.imgResizer(src='https://wanderonwards.files.wordpress.com/2013/08/mogadorbrunch.jpg')
-			div.row
-				div.col-xs-6
-					p.lookMarkText.pull-left 🔥🔥🔥
-				div.col-xs-6
-					p.lookMarkText.pull-right 15 influencers have been here
-	
-		div.lookMarkCard
-			h3.seanH3 Shake Shack
-			span.imgFrame
-				img.imgResizer(src='http://burgerdays.com/wp-content/uploads/2013/06/shackburg.jpg')
-			div.row
-				div.col-xs-6 
-					p.lookMarkText.pull-left 🔥🔥🔥🔥
-				div.col-xs-6
-					p.lookMarkText.pull-right 4 influencers have been here
-	
-		div.lookMarkCard
-			h3.seanH3 Bluestone Lane Coffee - Midtown East 
-			span.imgFrame
-				img.imgResizer(src='https://thirstynyc.com/wp-content/uploads/2014/06/Bluestone-Lane.jpg')
-			div.row
-				div.col-xs-6 
-					p.lookMarkText.pull-left 🔥🔥🔥
-				div.col-xs-6
-					p.lookMarkText.pull-right 7 influencers have been here
+		script(type='text/javascript').
+			var cards =  [];
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {	
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+
+		for mark in marks
+			script(type='text/javascript').
+				cards.push({
+					lat: #{mark.latitude},
+					lng: #{mark.longitude},
+					distance: 0,
+					name: #{mark.name},
+					imgurl: #{mark.medias2[0].image_url},
+					been: #{mark.medias2[0].posted_by_name}
+				});
+
+
+		script(type='text/javascript').
+			function initz() {
+				var j;
+
+				for (j = 0; j < cards.length; ++j) {
+					cards[j].distance = Math.sqrt(Math.pow(cards[j].lng - pos.lng,2) + Math.pow(cards[j].lat - pos.lat,2));
+					console.log(cads[j].distance);
+				};
+
+				cards.sort(function(a,b) {
+					return b.distance - a.distance;
+				});
+				
+				var i;
+				for (i = 0; i < cards.length; ++i) {
+					var el = document.getElementById('background');
+					console.log(el);
+					el.insertAdjacentHTML('beforeend', '
+					<div class="lookMarkCard">
+						<h3 class="seanH3">' + cards[i].name + '</h3>
+						<span class="imgFrame"><img class="imgResizer" src="' + cards[i].imgurl + '
+						<div class="row">
+							<div class="col-xs-6">
+								<p class="lookMarkText pull-left">🔥🔥🔥🔥</p>
+							</div>
+							<div class="col-xs-6">
+								<p class="lookMarkText pull-right">' + cards[i].been + ' has been here</p>
+							</div>
+						</div>
+					</div>');
+				};
+			};
+
+			window.onload = function() {
+				initz();
+			};
