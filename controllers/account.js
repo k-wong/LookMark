@@ -56,7 +56,8 @@ exports.getFollows = (req, res, next) => {
           bio: results2.userData.bio,
           posts: results2.userData.counts.media,
           follows: results2.userData.counts.follows,
-          followed_by: results2.userData.counts.followed_by
+          followed_by: results2.userData.counts.followed_by,
+          marks: []
         });
         var temp_marks = []; //for keeping track of Mark IDs to add to Account
 
@@ -82,9 +83,10 @@ exports.getFollows = (req, res, next) => {
                 name: results3.recentMedia[i].location.name,
                 latitude: results3.recentMedia[i].location.latitude,
                 longitude: results3.recentMedia[i].location.longitude,
+                //accts_been: [],
                 medias: [] //{results3.recentMedia[i].id})
               });
-              if (temp_marks.indexOf(mark.instagram_id) < 0) { temp_marks.push(mark.instagram_id); } // add into temp Marks list
+              //console.log("    " + i + " Mark -- " + temp_marks.toString());
               console.log("      " + i + " Media -- " + results3.recentMedia[i].caption.text);  
               const media = new Media({
                 instagram_id: results3.recentMedia[i].id, //id
@@ -99,20 +101,34 @@ exports.getFollows = (req, res, next) => {
               });
 
               Mark.findOne({ instagram_id: mark.instagram_id }, (err, existingMark) => {
-                console.log("In Mark findone");
                 if (!existingMark) { // add new mark
-                  mark.medias.push(media.instagram_id);
+                  mark.medias.push(media);
+                  //mark.medias.push(media.instagram_id);
                   mark.save((err) => {
                     if (err) { return next(err); }
                   });
                   console.log("    Mark - New Added");
+                  temp_marks.push(mark); // add into temp Marks list
                 } else { // if existing Mark, then just add the additional Media
-                  existingMark.medias.push(media.instagram_id);
+                  var k;
+                  var flag;
+                  for (k = 0; k < existingMark.medias.length; ++k) {
+                    if (existingMark.medias[k].instagram_id = mark.instagram_id) {
+                      flag = true;
+                    }
+                  }; // end for
+                  if (!flag) { //if not previously existing media then add
+                    //existingMark.medias.push(media.instagram_id);
+                    existingMark.medias.push(media);
+                  };
                   existingMark.save((err) => {
                     if (err) { return next(err); }
                   });
+
+                  temp_marks.push(existingMark); // add into temp Marks list
                 };
               }); // end Mark add
+
 
               Media.findOne({ instagram_id: media.instagram_id }, (err, existingMedia) => {
                 if (!existingMedia) {
@@ -124,26 +140,40 @@ exports.getFollows = (req, res, next) => {
               }); // end Media add
             }; // end if  
           }; // end for
-        });
-        // End getting marks and media
 
-        Account.findOne({ instagram_id: results2.userData.instagram_id }, (err, existingAcct) => {
-          if (!existingAcct) {
-            acct.marks = temp_marks;
-            acct.save((err) => {
-              if (err) { return next(err); }
-            });
-          } else { //if Account exists, check for any updates to Marks
+        Account.findOne({ instagram_id: acct.instagram_id }, (err, existingAcct) => {
+          if (!existingAcct) { //new account
             var j;
             for (j = 0; j < temp_marks.length; ++j) {
-              if (existingAcct.marks.indexOf(temp_marks[j]) < 0) { // if existing Account doesn't have this Mark
-                existingAcct.marks.push(temp_marks[j]);
+              acct.marks.push(temp_marks[j]);
+            }
+            acct.save((err) => {
+              if (err) { return next(err); }
+              console.log("SAVED NEW ACCT: " + acct.marks.toString())
+            });
+          } else { //if Account exists, check for any updates to Marks
+            var j, k, flag;
+            for (j = 0; j < temp_marks.length; ++j) {
+              flag = false;
+              for (k = 0; k < existingAcct.marks.length; ++k) {
+                if (!temp_marks[k] == null) {
+                  if (temp_marks[k].instagram_id = existingAcct.marks[j].instagram_id) {
+                    flag = true;
+                  }
+                }
+              } // end for
+              if (!flag) { // this temp_mark item doesn't exist in existingAcct
+                existingAcct.marks.push(temp_marks[j])
               }
             } // end for
             existingAcct.save((err) => {
               if (err) { return next(err); }
+              console.log("SAVED EXI ACCT: " + acct.marks.toString())
             });
           } // end if
+
+        });
+        // End getting marks and media
 
           // Update follows list of the current user
           User.findById(req.user.id, (err, user) => {

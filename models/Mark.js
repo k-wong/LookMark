@@ -6,8 +6,9 @@ const markSchema = new mongoose.Schema({
   latitude: Number,
   longitude: Number,
 
-  //media: [{type: mongoose.Schema.Types.ObjectId, ref: 'Media'}]
-  medias: Array
+//  accts_been: [{type: mongoose.Schema.Types.ObjectId, ref: 'Account'}],
+  medias: [{type: mongoose.Schema.Types.ObjectId, ref: 'Media'}]
+  //medias: [String]
 }, { timestamps: true });
 
 const Mark = mongoose.model('Mark', markSchema);

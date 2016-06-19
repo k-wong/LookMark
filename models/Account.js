@@ -9,7 +9,7 @@ const accountSchema = new mongoose.Schema({
   posts: Number,
   follows: Number,
   followed_by: Number,
-
+  //marks: [String]
   marks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Mark'}]
 }, { timestamps: true });
 

@@ -10,6 +10,7 @@ const mediaSchema = new mongoose.Schema({
   image_url: String,
   posted_by_instagram_id: String,
   posted_by_name: String
+//  _mark: {type: mongoose.Schema.Types.ObjectId, ref: 'Mark'}
 }, { timestamps: true });
 
 const Media = mongoose.model('Media', mediaSchema);
